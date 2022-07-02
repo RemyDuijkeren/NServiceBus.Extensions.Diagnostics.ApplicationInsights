@@ -4,9 +4,7 @@ on:
   push:
     tags:
       - '*.*.*'
-    branches:
-      - master
-        
+      
 jobs:
   build:
     runs-on: windows-latest
@@ -28,6 +26,7 @@ jobs:
         run: ./build.cmd Release
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
       - name: Test Reporter
         uses: dorny/test-reporter@v1.5.0

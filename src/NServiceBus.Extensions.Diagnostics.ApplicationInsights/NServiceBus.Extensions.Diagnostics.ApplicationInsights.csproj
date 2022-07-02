@@ -3,8 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <Description>
-            This library exports telemetry information to Application Insights for NServiceBus endpoints. It creates Request Telemtry for incoming request and
-            Dependency Telemetry for outgoing requests.
+            This library exports telemetry information to Application Insights for NServiceBus endpoints. It creates Request Telemetry for incoming request and Dependency Telemetry for outgoing requests.
         </Description>
         <IsPackable>true</IsPackable>
         <PackageId>NServiceBus.Extensions.Diagnostics.ApplicationInsights</PackageId>

@@ -9,8 +9,7 @@ on:
   pull_request:
     paths-ignore:
       - docs/**
-    branches:
-      - master  
+    
 jobs:
   build:
     runs-on: windows-latest    
