@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:      
+    paths-ignore:
+      - docs/**
+    branches:
+      - master
+  pull_request:
+    paths-ignore:
+      - docs/**
+    branches:
+      - master  
+jobs:
+  build:
+    runs-on: windows-latest    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+            fetch-depth: 0
+
+      - name: Setup .NET SDK 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+        env:
+          DOTNET_NOLOGO: true
+          DOTNET_CLI_TELEMETRY_OPTOUT: true
+         
+      - name: '⚙️Build, 🚦Test and 📦Pack'
+        run: ./build.cmd CI
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          
+      - name: Test Reporter
+        uses: dorny/test-reporter@v1.5.0
+        if: success() || failure()
+        with:
+          name: unittests
+          path: ./artifacts/test-results/*.trx
+          reporter: dotnet-trx
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        if: github.ref == 'refs/heads/master'
+        with:
+          name: artifacts
+          path: ./artifacts/**/*
+        
+      - name: Delete old pre-release packages
+        uses: actions/delete-package-versions@v2
+        with:
+            package-name: NServiceBus.Extensions.Diagnostics.ApplicationInsights
+            min-versions-to-keep: 10
+            delete-only-pre-release-versions: true

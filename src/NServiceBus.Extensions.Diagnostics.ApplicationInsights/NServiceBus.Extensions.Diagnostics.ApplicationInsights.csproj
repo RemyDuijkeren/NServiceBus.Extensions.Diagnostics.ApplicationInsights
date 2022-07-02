@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Description>
+            This library exports telemetry information to Application Insights for NServiceBus endpoints. It creates Request Telemtry for incoming request and
+            Dependency Telemetry for outgoing requests.
+        </Description>
+        <IsPackable>true</IsPackable>
+        <PackageId>NServiceBus.Extensions.Diagnostics.ApplicationInsights</PackageId>
+        <PackageTags>nservicebus;messaging;diagnostics;applicationinsights</PackageTags>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/AutomateValue/NServiceBus.Extensions.Diagnostics.ApplicationInsights</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/AutomateValue/NServiceBus.Extensions.Diagnostics.ApplicationInsights.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageIcon>automatevalue-icon.png</PackageIcon>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <Deterministic>true</Deterministic>
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+      <PackageReference Include="Microsoft.ApplicationInsights" Version="2.20.0" />
+      <PackageReference Include="MinVer" Version="4.1.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="NServiceBus.Extensions.Diagnostics" Version="2.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Visible="false" Include="../../docs/automatevalue-icon.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+</Project>
