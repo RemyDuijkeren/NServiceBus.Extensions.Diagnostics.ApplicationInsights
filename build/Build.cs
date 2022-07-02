@@ -90,7 +90,6 @@ class Build : NukeBuild
         .TriggeredBy(Pack)
         .OnlyWhenStatic(() => IsServerBuild)
         .OnlyWhenStatic(() => GitHubActions != null)
-        .OnlyWhenStatic(() => GitRepository.Branch == "master")
         .Executes(() =>
         {
             // GitHub doesn't allow symbols (.snupkg) yet
@@ -104,7 +103,6 @@ class Build : NukeBuild
         .DependsOn(Pack)
         .OnlyWhenStatic(() => IsServerBuild)
         .OnlyWhenStatic(() => NugetApiKey != null)
-        .OnlyWhenStatic(() => GitRepository.Branch == "master")
         .Executes(() =>
         {
             DotNetNuGetPush(s => s
