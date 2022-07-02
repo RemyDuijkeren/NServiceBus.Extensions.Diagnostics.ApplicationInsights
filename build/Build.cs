@@ -111,8 +111,6 @@ class Build : NukeBuild
                 .SetTargetPath(ArtifactsDirectory / "*.nupkg")
                 .SetSource("https://api.nuget.org/v3/index.json") 
                 .SetApiKey(NugetApiKey));
-            
-            //.Where(x => !x.EndsWith("symbols.nupkg"))
         });
 
     Target CI => _ => _

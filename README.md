@@ -1,14 +1,28 @@
 ﻿# NServiceBus.Extensions.Diagnostics.ApplicationInsights
 
-![master branch](https://github.com/AutomateValue/NServiceBus.Extensions.Diagnostics.ApplicationInsights/actions/workflows/build.yml/badge.svg)
-![pull request](https://github.com/AutomateValue/NServiceBus.Extensions.Diagnostics.ApplicationInsights/actions/workflows/build.yml/badge.svg?event=pull_request)
+![CI](https://github.com/AutomateValue/NServiceBus.Extensions.Diagnostics.ApplicationInsights/actions/workflows/ci.yml/badge.svg)
+[![NuGet](https://img.shields.io/nuget/dt/NServiceBus.Extensions.Diagnostics.ApplicationInsights.svg)](https://www.nuget.org/packages/NServiceBus.Extensions.Diagnostics.ApplicationInsights)
+[![NuGet](https://img.shields.io/nuget/vpre/NServiceBus.Extensions.Diagnostics.ApplicationInsights.svg)](https://www.nuget.org/packages/NServiceBus.Extensions.Diagnostics.ApplicationInsights)
 
 ## Usage
 
-The `NServiceBus.Extensions.Diagnostics.ApplicationInsights` package sends telemetry information that is being exposed by 
-[NServiceBus.Extensions.Diagnostics](https://www.nuget.org/packages/NServiceBus.Extensions.Diagnostics) to [Application Insights](https://azure.microsoft.com/en-us/services/monitor/).
+The `NServiceBus.Extensions.Diagnostics.ApplicationInsights` package generates telemetry information for [Application Insights](https://azure.microsoft.com/en-us/services/monitor/)
+that is being exposed by [NServiceBus.Extensions.Diagnostics](https://www.nuget.org/packages/NServiceBus.Extensions.Diagnostics).
 
-To use `NServiceBus.Extensions.Diagnostics.ApplicationInsights`, simply reference the package. The `DiagnosticsFeature` is enabled by default.
+To use `NServiceBus.Extensions.Diagnostics.ApplicationInsights`, simply reference the package and register the `ITelemetryModule` 
+with the `NServiceBusTelemetryModule` as a singleton service.
+
+An example with a Worker Service is shown here:
+
+```csharp
+    services.AddSingleton<ITelemetryModule, NServiceBusTelemetryModule>();
+    services.AddApplicationInsightsTelemetryWorkerService(opt =>
+    {
+#if DEBUG
+        opt.DeveloperMode = true;
+#endif
+    });
+```
 
 ## Application Insights
 
@@ -24,7 +38,7 @@ TODO: Explain dependency telemetry
 
 ## Activity
 
-The `NServiceBus.Extensions.Diagnostics` will add the NServiceBus context  to `Activity`, like incoming headers into `Activity.Baggage`.
+The `NServiceBus.Extensions.Diagnostics` will add the NServiceBus context to `Activity`, like incoming headers into `Activity.Baggage`.
 
 If you would like to add additional correlation context, inside your handler you can add additional baggage:
 
@@ -32,7 +46,7 @@ If you would like to add additional correlation context, inside your handler you
 Activity.Current.AddBaggage("mykey", "myvalue");
 ```
 
-The additional correlation context will be added to the telemetry send to Application Insights. Common usage for correlation context
+The additional correlation context will be added to the generated telemetry for Application Insights. Common usage for correlation context
 are user IDs, session IDs, conversation IDs, and anything you might want to search traces to triangulate specific traces.
 
 ### Enriching Activities
