@@ -1,4 +1,6 @@
-﻿# NServiceBus.Extensions.Diagnostics.ApplicationInsights
+**This repo is no longer maintained. All of its functionality is now present in [NServiceBus OTel](https://docs.particular.net/nservicebus/operations/opentelemetry) support.**
+
+ # NServiceBus.Extensions.Diagnostics.ApplicationInsights
 
 ![CI](https://github.com/AutomateValue/NServiceBus.Extensions.Diagnostics.ApplicationInsights/actions/workflows/ci.yml/badge.svg)
 [![NuGet](https://img.shields.io/nuget/dt/NServiceBus.Extensions.Diagnostics.ApplicationInsights.svg)](https://www.nuget.org/packages/NServiceBus.Extensions.Diagnostics.ApplicationInsights)
